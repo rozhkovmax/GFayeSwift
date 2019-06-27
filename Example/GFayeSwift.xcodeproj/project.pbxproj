@@ -13,8 +13,8 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		8053C29422C3D69F003CA0F0 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8053C29722C3D6A6003CA0F0 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		8053C29422C3D69F003CA0F0 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		8053C29722C3D6A6003CA0F0 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		B635276FB97F9CACF5D0E5D0 /* Pods_GFayeSwift_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2F9CDA7C7088AF7FFA314E /* Pods_GFayeSwift_Example.framework */; };
 		BE83B47D42E74E01AC0C6456 /* Pods_GFayeSwift_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA84C2D7835EDFFF3EDE6DBE /* Pods_GFayeSwift_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -56,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8053C29422C3D69F003CA0F0 /* BuildFile in Frameworks */,
+				8053C29422C3D69F003CA0F0 /* (null) in Frameworks */,
 				B635276FB97F9CACF5D0E5D0 /* Pods_GFayeSwift_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,7 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8053C29722C3D6A6003CA0F0 /* BuildFile in Frameworks */,
+				8053C29722C3D6A6003CA0F0 /* (null) in Frameworks */,
 				BE83B47D42E74E01AC0C6456 /* Pods_GFayeSwift_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,11 +217,11 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
@@ -516,8 +516,7 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -531,8 +530,7 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -550,8 +548,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.GFayeSwift-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GFayeSwift_Example.app/GFayeSwift_Example";
 			};
 			name = Debug;
@@ -566,8 +563,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.GFayeSwift-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GFayeSwift_Example.app/GFayeSwift_Example";
 			};
 			name = Release;

@@ -1,9 +1,9 @@
 PODS:
-  - GFayeSwift (0.4.2):
-    - Starscream (~> 3.0.0)
-    - SwiftyJSON (~> 4.2.0)
-  - Starscream (3.0.6)
-  - SwiftyJSON (4.2.0)
+  - GFayeSwift (0.5.0):
+    - Starscream (~> 3.1.0)
+    - SwiftyJSON (~> 5.0.0)
+  - Starscream (3.1.0)
+  - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
   - GFayeSwift (from `../`)
@@ -18,9 +18,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  GFayeSwift: e34779a3d8e8e9583cef92ad5d32845ea62c3c5c
-  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
-  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
+  GFayeSwift: 87c83c2d740d4176932347fba35647edfd47dc24
+  Starscream: 08172b481e145289c4930cb567230fb55897cfa4
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
 PODFILE CHECKSUM: 7c198651615b77b7caa39b842903cd5ffb5b8b95
 
