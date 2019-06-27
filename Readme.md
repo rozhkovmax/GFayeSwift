@@ -12,6 +12,7 @@ GFayeSwift is forked from [FayeSwift](https://github.com/hamin/FayeSwift) to sup
 FayeSwift  was heavily inspired by the Objective-C client found here: [FayeObjc](https://github.com/pcrawfor/FayeObjC)
 
 ___**Note**: For Swift 2.2 please use FayeSwift 0.2.0___
+
 ___**Note**: For Swift 3.2 please use FayeSwift 0.3.0___
 
 ## Example
