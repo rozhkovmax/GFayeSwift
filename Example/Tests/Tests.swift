@@ -1,6 +1,6 @@
 import UIKit
 import XCTest
-import FayeSwift
+import GFayeSwift
 
 class Tests: XCTestCase {
     

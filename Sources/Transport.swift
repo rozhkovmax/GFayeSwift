@@ -4,6 +4,8 @@
 //
 //  Created by Haris Amin on 2/20/16.
 //
+//  Updated by Cindy Wong on 2019-06-25.
+//  Copyright (c) 2019 Cindy Wong.
 //
 
 public protocol Transport {
@@ -15,9 +17,9 @@ public protocol Transport {
 
 public protocol TransportDelegate: class {
   func didConnect()
-  func didFailConnection(_ error:NSError?)
-  func didDisconnect(_ error: NSError?)
-  func didWriteError(_ error:NSError?)
+  func didFailConnection(_ error:Error?)
+  func didDisconnect(_ error: Error?)
+  func didWriteError(_ error:Error?)
   func didReceiveMessage(_ text:String)
   func didReceivePong()
 }

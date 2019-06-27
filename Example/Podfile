@@ -4,10 +4,10 @@ use_frameworks!
 inhibit_all_warnings!
 platform :ios, '8.0'
 
-target 'FayeSwift_Example' do
-  pod 'FayeSwift', :path => '../'
+target 'GFayeSwift_Example' do
+  pod 'GFayeSwift', :path => '../'
 end
 
-target 'FayeSwift_Tests' do
-  pod 'FayeSwift', :path => '../'
+target 'GFayeSwift_Tests' do
+  pod 'GFayeSwift', :path => '../'
 end

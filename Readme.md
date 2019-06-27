@@ -1,34 +1,37 @@
-# FayeSwift
+# GFayeSwift
 
-[![Join the chat at https://gitter.im/hamin/FayeSwift](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/hamin/FayeSwift?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-![swift](https://raw.githubusercontent.com/hamin/FayeSwift/master/swift-logo.png)
+![swift](https://raw.githubusercontent.com/ckpwong/GFayeSwift/master/swift-logo.png)
 
 
-A simple Swift client library for the [Faye](http://faye.jcoglan.com/) publish-subscribe messaging server. FayeObjC is implemented atop the [Starscream](https://github.com/daltoniam/starscream) Swift web socket library and will work on both Mac (pending Xcode 6 Swift update) and iPhone projects.
+A simple Swift client library for the [Faye](http://faye.jcoglan.com/) publish-subscribe messaging server. Faye is based on the Bayeux protocol and is compatible with CometD server.
 
-It was heavily inspired by the Objective-C client found here: [FayeObjc](https://github.com/pcrawfor/FayeObjC)
+GFayeSwift is implemented atop the [Starscream](https://github.com/daltoniam/starscream) Swift web socket library and will work on both Mac (pending Xcode 6 Swift update) and iPhone projects.
+
+GFayeSwift is forked from [FayeSwift](https://github.com/hamin/FayeSwift) to support Swift 4.2.
+
+FayeSwift  was heavily inspired by the Objective-C client found here: [FayeObjc](https://github.com/pcrawfor/FayeObjC)
 
 ___**Note**: For Swift 2.2 please use FayeSwift 0.2.0___
+___**Note**: For Swift 3 please use FayeSwift 0.3.0___
 
 ## Example
 
 ### Installation
 
-FayeSwift is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:     
+GFayeSwift is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:     
 
 ```ruby
-  pod "FayeSwift"
+  pod "GFayeSwift"
 ```
 
-_Swift Package Manager compatability is coming sson_
+_Swift Package Manager compatability is coming soon_
 
 ### Initializing Client
 
-You can open a connection to your faye server. Note that `client` is probably best as a property, so your delegate can stick around. You can initiate a client with a subscription to a specific channel.
+You can open a connection to your Faye/Bayeux/CometD server. Note that `client` is probably best as a property, so your delegate can stick around. You can initiate a client with a subscription to a specific channel.
 
 ```swift
-client = FayeClient(aFayeURLString: "ws://localhost:5222/faye", channel: "/cool")
+client = GFayeClient(aGFayeURLString: "ws://localhost:5222/faye", channel: "/cool")
 client.delegate = self
 client.connectToServer()
 ```
@@ -53,70 +56,70 @@ After you are connected, there are some optional delegate methods that we can im
 
 ### connectedToServer
 
-connectedToServer is called as soon as the client connects to the Faye server.
+connectedToServer is called as soon as the client connects to the server.
 
 ```swift
-func connectedToServer(client: FayeClient) {
-   println("Connected to Faye server")
+func connectedToServer(client: GFayeClient) {
+   println("Connected to server")
 }
 ```
 
 ### connectionFailed
 
-connectionFailed is called when a cleint fails to connect to Faye server either initially or on a retry.
+connectionFailed is called when a cleint fails to connect to server either initially or on a retry.
 
 ```swift
-func connectionFailed(client: FayeClient) {
-   println("Failed to connect to Faye server!")
+func connectionFailed(client: GFayeClient) {
+   println("Failed to connect to server!")
 }
 ```
 
 ### disconnectedFromServer
 
-disconnectedFromServer is called as soon as the client is disconnected from the server..
+disconnectedFromServer is called as soon as the client is disconnected from the server.
 
 ```swift
-func disconnectedFromServer(client: FayeClient) {
-   println("Disconnected from Faye server")
+func disconnectedFromServer(client: GFayeClient) {
+   println("Disconnected from server")
 }
 ```
 
 ### didSubscribeToChannel
 
-didSubscribeToChannel is called when the subscribes to a Faye channel.
+didSubscribeToChannel is called when the subscribes to a channel.
 
 ```swift
-func didSubscribeToChannel(client: FayeClient, channel: String) {
+func didSubscribeToChannel(client: GFayeClient, channel: String) {
    println("subscribed to channel \(channel)")
 }
 ```
 
 ### didUnsubscribeFromChannel
 
-didUnsubscribeFromChannel is called when the client unsubscribes to a Faye channel.
+didUnsubscribeFromChannel is called when the client unsubscribes to a channel.
 
 ```swift
-func didUnsubscribeFromChannel(client: FayeClient, channel: String) {
-   println("UNsubscribed from channel \(channel)")
+func didUnsubscribeFromChannel(client: GFayeClient, channel: String) {
+   println("Unsubscribed from channel \(channel)")
 }
 ```
 
 ### subscriptionFailedWithError
 
-The subscriptionFailedWithError method is called when the client fails to subscribe to a Faye channel.
+The subscriptionFailedWithError method is called when the client fails to subscribe to a channel.
 
 ```swift
-func subscriptionFailedWithError(client: FayeClient, error: subscriptionError) {
+func subscriptionFailedWithError(client: GFayeClient, error: subscriptionError) {
    println("SUBSCRIPTION FAILED!!!!")
 }
 ```
 
 ### messageReceived
 
-The messageReceived is called when the client receives a message from any Faye channel that it is subscribed to.	
+The messageReceived is called when the client receives a message from any channel that it is subscribed to.	
 
 ```swift
-func messageReceived(client: FayeClient, messageDict: NSDictionary, channel: String) {
+func messageReceived(client: GFayeClient, messageDict: NSDictionary, channel: String) {
    let text: AnyObject? = messageDict["text"]
    println("Here is the message: \(text)")
    
@@ -124,7 +127,7 @@ func messageReceived(client: FayeClient, messageDict: NSDictionary, channel: Str
 }
 ```
 
-The delegate methods give you a simple way to handle data from the server, but how do you publish data to a Faye channel?
+The delegate methods give you a simple way to handle data from the server, but how do you publish data to a channel?
 
 
 ### sendMessage
@@ -137,7 +140,7 @@ client.sendMessage(["text": textField.text], channel: "/cool")
 
 ## Example Server
 
-There is a sample faye server using the NodeJS Faye library. If you have NodeJS installed just run the following commands to install the package:
+There is a sample Faye server using the NodeJS Faye library. If you have NodeJS installed just run the following commands to install the package:
 
 ```javascript
 npm install
@@ -150,27 +153,18 @@ node faye_server.js
 ```
 ## Example Project
 
-Check out the FayeSwiftDemo project to see how to setup a simple connection to a Faye server.
+Check out the GFayeSwiftDemo project to see how to setup a simple connection to a Faye server.
 
 ## Requirements
 
-FayeSwift requires at least iOS 7/OSX 10.10 or above.
-
-## TODOs
-
-- [x] Cocoapods Integration
-- [x] Add block handlers
-- [x] Complete Docs
-- [ ] Add Unit Tests
-- [ ] Swift Package Mananger Support
-- [ ] Rethink use of optionals (?)
-- [ ] Support for a long-polling transport (?)
+GFayeSwift requires at least iOS 8/OSX 10.10 or above.
 
 ## License
 
-FayeSwift is licensed under the MIT License.
+GFayeSwift is licensed under the MIT License.
 
 ## Libraries
 
-* [Starscream](https://github.com/daltoniam)
+* [Starscream](https://github.com/daltoniam/Starscream)
 * [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
+

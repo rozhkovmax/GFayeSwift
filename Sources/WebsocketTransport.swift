@@ -4,33 +4,34 @@
 //
 //  Created by Haris Amin on 2/20/16.
 //
+//  Updated by Cindy Wong on 2019-06-25.
+//  Copyright (c) 2019 Cindy Wong.
 //
 
 import Foundation
 import Starscream
 
 internal class WebsocketTransport: Transport, WebSocketDelegate, WebSocketPongDelegate {
-  var urlString:String?
+        
+  var urlString:String
   var webSocket:WebSocket?
   var headers: [String: String]? = nil
   internal weak var delegate:TransportDelegate?
   
-  convenience required internal init(url: String) {
-    self.init()
-    
+  required internal init(url: String) {
     self.urlString = url
   }
   
   func openConnection() {
     self.closeConnection()
-    self.webSocket = WebSocket(url: URL(string:self.urlString!)!)
+    self.webSocket = WebSocket(url: URL(string:self.urlString)!)
     
     if let webSocket = self.webSocket {
       webSocket.delegate = self
       webSocket.pongDelegate = self
       if let headers = self.headers {
         for (key, value) in headers {
-          webSocket.headers[key] = headers[value]
+          webSocket.request.addValue(value, forHTTPHeaderField: key)
         }
       }
       webSocket.connect()
@@ -63,24 +64,24 @@ internal class WebsocketTransport: Transport, WebSocketDelegate, WebSocketPongDe
   }
   
   // MARK: Websocket Delegate
-  internal func websocketDidConnect(socket: WebSocket) {
+    internal func websocketDidConnect(socket: WebSocketClient) {
     self.delegate?.didConnect()
   }
   
-  internal func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
+    internal func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
     if error == nil {
-      self.delegate?.didDisconnect(NSError(error: .lostConnection))
+      self.delegate?.didDisconnect(GFayeSocketError.lostConnection)
     } else {
-      self.delegate?.didFailConnection(error)
+        self.delegate?.didFailConnection(error)
     }
   }
   
-  internal func websocketDidReceiveMessage(socket: WebSocket, text: String) {
+  internal func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
     self.delegate?.didReceiveMessage(text)
   }
   
   // MARK: TODO
-  internal func websocketDidReceiveData(socket: WebSocket, data: Data) {
+  internal func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
     print("Faye: Received data: \(data.count)")
     //self.socket.writeData(data)
   }
@@ -90,7 +91,7 @@ internal class WebsocketTransport: Transport, WebSocketDelegate, WebSocketPongDe
     self.delegate?.didReceivePong()
   }
     
-  func websocketDidReceivePong(socket: WebSocket, data: Data?) {
+  internal func websocketDidReceivePong(socket: WebSocketClient, data: Data?) {
     self.delegate?.didReceivePong()
   }
 }

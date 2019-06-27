@@ -4,13 +4,12 @@
 //
 //  Created by Haris Amin on 2/20/16.
 //
+//  Updated by Cindy Wong on 2019-06-25.
+//  Copyright (c) 2019 Cindy Wong.
 //
 
 // MARK: Custom Extensions
 extension String {
-  subscript (i: Int) -> String {
-    return String(Array(self.characters)[i])
-  }
   
   // http://iosdevelopertips.com/swift-code/base64-encode-decode-swift.html
   func encodedString() -> String {
