@@ -7,12 +7,12 @@ A simple Swift client library for the [Faye](http://faye.jcoglan.com/) publish-s
 
 GFayeSwift is implemented atop the [Starscream](https://github.com/daltoniam/starscream) Swift web socket library and will work on both Mac (pending Xcode 6 Swift update) and iPhone projects.
 
-GFayeSwift is forked from [FayeSwift](https://github.com/hamin/FayeSwift) to support Swift 4.2.
+GFayeSwift is forked from [FayeSwift](https://github.com/hamin/FayeSwift) to support Swift 4.2.  Version 0.5.0 supports Swift 5.0.
 
 FayeSwift  was heavily inspired by the Objective-C client found here: [FayeObjc](https://github.com/pcrawfor/FayeObjC)
 
 ___**Note**: For Swift 2.2 please use FayeSwift 0.2.0___
-___**Note**: For Swift 3 please use FayeSwift 0.3.0___
+___**Note**: For Swift 3.2 please use FayeSwift 0.3.0___
 
 ## Example
 
