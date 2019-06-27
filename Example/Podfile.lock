@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  GFayeSwift: 1224b5b24d6b853f4905d2b9ad8ed30369af3b5b
+  GFayeSwift: e34779a3d8e8e9583cef92ad5d32845ea62c3c5c
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 

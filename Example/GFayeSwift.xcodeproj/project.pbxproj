@@ -13,8 +13,9 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		8053C29422C3D69F003CA0F0 /* Pods_GFayeSwift_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8053C29322C3D69F003CA0F0 /* Pods_GFayeSwift_Example.framework */; };
-		8053C29722C3D6A6003CA0F0 /* Pods_GFayeSwift_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8053C29522C3D69F003CA0F0 /* Pods_GFayeSwift_Tests.framework */; };
+		8053C29422C3D69F003CA0F0 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		8053C29722C3D6A6003CA0F0 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		B635276FB97F9CACF5D0E5D0 /* Pods_GFayeSwift_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2F9CDA7C7088AF7FFA314E /* Pods_GFayeSwift_Example.framework */; };
 		BE83B47D42E74E01AC0C6456 /* Pods_GFayeSwift_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA84C2D7835EDFFF3EDE6DBE /* Pods_GFayeSwift_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		69ECA6E1F5E1DDDBFFB9CD25 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		9EBCB3E6BD40A7F421E32937 /* Pods-GFayeSwift_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GFayeSwift_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GFayeSwift_Tests/Pods-GFayeSwift_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		AA84C2D7835EDFFF3EDE6DBE /* Pods_GFayeSwift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GFayeSwift_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD2F9CDA7C7088AF7FFA314E /* Pods_GFayeSwift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GFayeSwift_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D15C674D194A6C52F5D07072 /* Pods-GFayeSwift_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GFayeSwift_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GFayeSwift_Example/Pods-GFayeSwift_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		D2CBE82C6677EA49D92BBF5C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		EEE76920E3ACDC740EBA7A16 /* Pods-GFayeSwift_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GFayeSwift_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GFayeSwift_Tests/Pods-GFayeSwift_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -54,7 +56,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8053C29422C3D69F003CA0F0 /* Pods_GFayeSwift_Example.framework in Frameworks */,
+				8053C29422C3D69F003CA0F0 /* BuildFile in Frameworks */,
+				B635276FB97F9CACF5D0E5D0 /* Pods_GFayeSwift_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,7 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8053C29722C3D6A6003CA0F0 /* Pods_GFayeSwift_Tests.framework in Frameworks */,
+				8053C29722C3D6A6003CA0F0 /* BuildFile in Frameworks */,
 				BE83B47D42E74E01AC0C6456 /* Pods_GFayeSwift_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				AA84C2D7835EDFFF3EDE6DBE /* Pods_GFayeSwift_Tests.framework */,
+				AD2F9CDA7C7088AF7FFA314E /* Pods_GFayeSwift_Example.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
