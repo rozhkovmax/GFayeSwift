@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   s.source_files = "Sources/*.swift"
   s.dependency "Starscream", '~> 3.1.0'
   s.dependency "SwiftyJSON", '~> 5.0.0'
-  s.swift_versions   = [ "5.0" ]
+  s.swift_versions   = [ "4.2", "5.0" ]
 end

@@ -80,7 +80,7 @@ extension GFayeClient {
     func removeChannelFromQueuedSubscriptions(_ channel: String) -> Bool {
         var result = false
         queuedSubsLockQueue.sync {
-            let index = self.queuedSubscriptions.index { $0.subscription == channel }
+            let index = self.queuedSubscriptions.firstIndex { $0.subscription == channel }
             
             if let index = index {
                 self.queuedSubscriptions.remove(at: index)
@@ -95,7 +95,7 @@ extension GFayeClient {
     func removeChannelFromPendingSubscriptions(_ channel: String) -> Bool {
         var result = false
         pendingSubsLockQueue.sync {
-            let index = self.pendingSubscriptions.index { $0.subscription == channel }
+            let index = self.pendingSubscriptions.firstIndex { $0.subscription == channel }
             
             if let index = index {
                 self.pendingSubscriptions.remove(at: index)
@@ -110,7 +110,7 @@ extension GFayeClient {
     func removeChannelFromOpenSubscriptions(_ channel: String) -> Bool {
         var result = false
         openSubsLockQueue.sync {
-            let index = self.openSubscriptions.index { $0.subscription == channel }
+            let index = self.openSubscriptions.firstIndex { $0.subscription == channel }
             
             if let index = index {
                 self.openSubscriptions.remove(at: index)
