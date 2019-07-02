@@ -1,10 +1,19 @@
+// swift-tools-version:4.0
 import PackageDescription
 
 let package = Package(
-    name: "FayeSwift",
-    targets: [],
+    name: "GFayeSwift",
+    products: [
+        .library(name: "GFayeSwift", targets: ["GFayeSwift"]),
+    ],
     dependencies: [
-        .Package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", versions: "4.2.0" ..< Version.max),
-		.Package(url: "https://github.com/daltoniam/Starscream.git", versions: "3.0.0" ..< Version.max)
+        .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "5.0.0"),
+        .package(url: "https://github.com/daltoniam/Starscream.git", from: "3.1.0"),
+    ],
+    targets: [
+        .target(
+            name: "GFayeSwift",
+            dependencies: ["SwiftyJSON", "Starscream"]),
     ]
 )
+

@@ -8,6 +8,8 @@
 //  Copyright (c) 2019 Cindy Wong.
 //
 
+import Foundation
+
 // MARK: Custom Extensions
 extension String {
   

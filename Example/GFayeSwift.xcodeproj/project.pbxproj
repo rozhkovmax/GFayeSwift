@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		8053C29422C3D69F003CA0F0 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		8053C29722C3D6A6003CA0F0 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		80DF97B822CBD20300D8AA62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
+		80DF97B922CBD20300D8AA62 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		B635276FB97F9CACF5D0E5D0 /* Pods_GFayeSwift_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2F9CDA7C7088AF7FFA314E /* Pods_GFayeSwift_Example.framework */; };
 		BE83B47D42E74E01AC0C6456 /* Pods_GFayeSwift_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA84C2D7835EDFFF3EDE6DBE /* Pods_GFayeSwift_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -354,8 +354,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
-				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				80DF97B822CBD20300D8AA62 /* AppDelegate.swift in Sources */,
+				80DF97B922CBD20300D8AA62 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,6 +538,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9EBCB3E6BD40A7F421E32937 /* Pods-GFayeSwift_Tests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -557,6 +558,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EEE76920E3ACDC740EBA7A16 /* Pods-GFayeSwift_Tests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Tests/Info.plist;

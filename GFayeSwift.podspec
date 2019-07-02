@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "GFayeSwift"
-  s.version          = "0.5.0"
+  s.version          = "0.5.1"
   s.summary          = "A pure Swift Faye (Bayeux/CometD) Client"
   s.description      = <<-DESC
                         A Pure Swift Client Library for Faye/Bayeux/CometD Pub-Sub messaging server.
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = "10.10"
   s.ios.deployment_target = "8.0"
   s.tvos.deployment_target = "9.0"
-  s.source_files = "Sources/*.swift"
+  s.source_files = "Sources/GFayeSwift/*.swift"
   s.dependency "Starscream", '~> 3.1.0'
   s.dependency "SwiftyJSON", '~> 5.0.0'
   s.swift_versions   = [ "4.0", "4.2", "5.0" ]

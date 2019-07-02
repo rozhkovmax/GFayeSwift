@@ -19,13 +19,31 @@ ___**Note**: For Swift 3.2 please use FayeSwift 0.3.0___
 
 ### Installation
 
+#### Cocoapods
+
 GFayeSwift is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:     
 
 ```ruby
   pod "GFayeSwift"
 ```
 
-_Swift Package Manager compatability is coming soon_
+#### Swift Package Manager
+
+Add GFayeSwift to dependencies:
+
+```swift
+    dependencies: [
+        .package(url: "https://github.com/ckpwong/GFayeSwift.git", from: "0.5.1"),
+    ],
+    targets: [
+        .target(
+            name: "My_Swift_Target",
+            dependencies: [
+                "GFayeSwift", 
+            ]
+        ),
+    ]
+```
 
 ### Initializing Client
 
