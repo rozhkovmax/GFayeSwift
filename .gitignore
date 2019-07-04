@@ -25,3 +25,6 @@ Carthage/Build
 
 #Node modules
 node_modules
+
+.build
+.vscode

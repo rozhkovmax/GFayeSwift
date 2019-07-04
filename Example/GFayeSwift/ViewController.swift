@@ -86,7 +86,7 @@ class ViewController: UIViewController, UITextFieldDelegate, GFayeClientDelegate
     print("Unsubscribed from channel \(channel)")
   }
   
-  func subscriptionFailedWithError(_ client: GFayeClient, error: subscriptionError) {
+  func subscriptionFailedWithError(_ client: GFayeClient, error: SubscriptionError) {
     print("Subscription failed")
   }
   

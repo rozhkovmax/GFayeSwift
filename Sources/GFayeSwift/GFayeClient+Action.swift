@@ -11,16 +11,16 @@
 import Foundation
 
 extension GFayeClient {
-    
+
     // MARK: Private - Timer Action
     @objc
     func pendingSubscriptionsAction(_ timer: Timer) {
         guard gFayeConnected == true else {
             print("GFaye: Failed to resubscribe to all pending channels, socket disconnected")
-            
+
             return
         }
-        
+
         resubscribeToPendingSubscriptions()
     }
 }

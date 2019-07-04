@@ -24,21 +24,20 @@ public enum GFayeSubscriptionState {
 // MARK: Type Aliases
 public typealias ChannelSubscriptionBlock = (NSDictionary) -> Void
 
-
 // MARK: GFayeClient
-open class GFayeClient : TransportDelegate {
-  open var gFayeURLString:String {
-    didSet {
-      if let transport = self.transport {
-        transport.urlString = gFayeURLString
-      }
+open class GFayeClient: TransportDelegate {
+    open var gFayeURLString: String {
+        didSet {
+            if let transport = self.transport {
+                transport.urlString = gFayeURLString
+            }
+        }
     }
-  }
-    
-  open var gFayeClientId:String?
-  open weak var delegate:GFayeClientDelegate?
-  
-  var transport:WebsocketTransport?
+
+    open var gFayeClientId: String?
+    open weak var delegate: GFayeClientDelegate?
+
+    var transport: WebsocketTransport?
     open var transportHeaders: [String: String]? = nil {
         didSet {
             if let transport = self.transport {
@@ -46,135 +45,140 @@ open class GFayeClient : TransportDelegate {
             }
         }
     }
-  
-  open internal(set) var gFayeConnected:Bool? {
-    didSet {
-      if gFayeConnected == false {
-        unsubscribeAllSubscriptions()
-      }
+
+    open internal(set) var gFayeConnected: Bool? {
+        didSet {
+            if gFayeConnected == false {
+                unsubscribeAllSubscriptions()
+            }
+        }
     }
-  }
-  
-  var connectionInitiated:Bool?
-  var messageNumber:UInt32 = 0
 
-  var queuedSubscriptions = Array<GFayeSubscriptionModel>()
-  var pendingSubscriptions = Array<GFayeSubscriptionModel>()
-  var openSubscriptions = Array<GFayeSubscriptionModel>()
+    var connectionInitiated: Bool?
+    var messageNumber: UInt32 = 0
 
-  var channelSubscriptionBlocks = Dictionary<String, ChannelSubscriptionBlock>()
+    var queuedSubscriptions = [GFayeSubscriptionModel]()
+    var pendingSubscriptions = [GFayeSubscriptionModel]()
+    var openSubscriptions = [GFayeSubscriptionModel]()
 
-  lazy var pendingSubscriptionSchedule: Timer = {
+    var channelSubscriptionBlocks = [String: ChannelSubscriptionBlock]()
+
+    lazy var pendingSubscriptionSchedule: Timer = {
         return Timer.scheduledTimer(
             timeInterval: 45,
             target: self,
             selector: #selector(pendingSubscriptionsAction(_:)),
-            userInfo: nil, 
+            userInfo: nil,
             repeats: true
         )
     }()
 
-  /// Default in 10 seconds
-  let timeOut: Int
+    /// Default in 10 seconds
+    let timeOut: Int
 
-  let readOperationQueue = DispatchQueue(label: "com.ckpwong.gfayeclient.read", attributes: [])
-  let writeOperationQueue = DispatchQueue(label: "com.ckpwong.gfayeclient.write", attributes: DispatchQueue.Attributes.concurrent)
-  let queuedSubsLockQueue = DispatchQueue(label:"com.gfayeclient.queuedSubscriptionsLockQueue")
-  let pendingSubsLockQueue = DispatchQueue(label:"com.gfayeclient.pendingSubscriptionsLockQueue")
-  let openSubsLockQueue = DispatchQueue(label:"com.gfayeclient.openSubscriptionsLockQueue")
-    
-  // MARK: Init
-  public init(aGFayeURLString:String, channel:String?, timeoutAdvice:Int=10000) {
-    self.gFayeURLString = aGFayeURLString
-    self.gFayeConnected = false;
-    self.timeOut = timeoutAdvice
-    
-    self.transport = WebsocketTransport(url: aGFayeURLString)
-    self.transport!.headers = self.transportHeaders
-    self.transport!.delegate = self;
+    let readOperationQueue = DispatchQueue(label: "com.ckpwong.gfayeclient.read", attributes: [])
+    let writeOperationQueue = DispatchQueue(
+        label: "com.ckpwong.gfayeclient.write",
+        attributes: DispatchQueue.Attributes.concurrent)
+    let queuedSubsLockQueue = DispatchQueue(label: "com.gfayeclient.queuedSubscriptionsLockQueue")
+    let pendingSubsLockQueue = DispatchQueue(label: "com.gfayeclient.pendingSubscriptionsLockQueue")
+    let openSubsLockQueue = DispatchQueue(label: "com.gfayeclient.openSubscriptionsLockQueue")
 
-    if let channel = channel {
-      self.queuedSubscriptions.append(GFayeSubscriptionModel(subscription: channel, clientId: gFayeClientId))
+    // MARK: Init
+    public init(aGFayeURLString: String, channel: String?, timeoutAdvice: Int=10000) {
+        self.gFayeURLString = aGFayeURLString
+        self.gFayeConnected = false
+        self.timeOut = timeoutAdvice
+
+        self.transport = WebsocketTransport(url: aGFayeURLString)
+        self.transport!.headers = self.transportHeaders
+        self.transport!.delegate = self
+
+        if let channel = channel {
+            self.queuedSubscriptions.append(GFayeSubscriptionModel(subscription: channel, clientId: gFayeClientId))
+        }
     }
-  }
 
-  public convenience init(aGFayeURLString:String, channel:String, channelBlock:@escaping ChannelSubscriptionBlock) {
-    self.init(aGFayeURLString: aGFayeURLString, channel: channel)
-    self.channelSubscriptionBlocks[channel] = channelBlock;
-  }
-  
-  deinit {
-    pendingSubscriptionSchedule.invalidate()
-  }
+    public convenience init(aGFayeURLString: String, channel: String, channelBlock:@escaping ChannelSubscriptionBlock) {
+        self.init(aGFayeURLString: aGFayeURLString, channel: channel)
+        self.channelSubscriptionBlocks[channel] = channelBlock
+    }
 
-  // MARK: Client
-  open func connectToServer() {
-    if self.connectionInitiated != true {
-      self.transport?.openConnection()
-      self.connectionInitiated = true;
-    } else {
-        print("GFaye: Connection established")
+    deinit {
+        pendingSubscriptionSchedule.invalidate()
     }
-  }
 
-  open func disconnectFromServer() {
-    unsubscribeAllSubscriptions()
-    
-    self.disconnect()
-  }
+    // MARK: Client
+    open func connectToServer() {
+        if self.connectionInitiated != true {
+            self.transport?.openConnection()
+            self.connectionInitiated = true
+        } else {
+            print("GFaye: Connection established")
+        }
+    }
 
-  open func sendMessage(_ messageDict: NSDictionary, channel:String) {
-    self.publish(messageDict as! Dictionary, channel: channel)
-  }
+    open func disconnectFromServer() {
+        unsubscribeAllSubscriptions()
 
-  open func sendMessage(_ messageDict:[String:AnyObject], channel:String) {
-    self.publish(messageDict, channel: channel)
-  }
-    
-  open func sendPing(_ data: Data, completion: (() -> ())?) {
-    writeOperationQueue.async { [unowned self] in
-      self.transport?.sendPing(data, completion: completion)
+        self.disconnect()
     }
-  }
 
-  open func subscribeToChannel(_ model:GFayeSubscriptionModel, block:ChannelSubscriptionBlock?=nil) -> GFayeSubscriptionState {
-    guard !self.isSubscribedToChannel(model.subscription) else {
-      return .subscribed(model)
+    open func sendMessage(_ messageDict: NSDictionary, channel: String) {
+        self.publish(messageDict as! Dictionary, channel: channel)
     }
-    
-    guard !self.pendingSubscriptions.contains(where: { $0 == model }) else {
-      return .pending(model)
+
+    open func sendMessage(_ messageDict: [String: AnyObject], channel: String) {
+        self.publish(messageDict, channel: channel)
     }
-    
-    if let block = block {
-      self.channelSubscriptionBlocks[model.subscription] = block;
+
+    open func sendPing(_ data: Data, completion: (() -> Void)?) {
+        writeOperationQueue.async { [unowned self] in
+            self.transport?.sendPing(data, completion: completion)
+        }
     }
-    
-    if self.gFayeConnected == false {
-      self.queuedSubscriptions.append(model)
-        
-      return .queued(model)
+
+    open func subscribeToChannel(
+        _ model: GFayeSubscriptionModel,
+        block: ChannelSubscriptionBlock?=nil)
+        -> GFayeSubscriptionState {
+        guard !self.isSubscribedToChannel(model.subscription) else {
+            return .subscribed(model)
+        }
+
+        guard !self.pendingSubscriptions.contains(where: { $0 == model }) else {
+            return .pending(model)
+        }
+
+        if let block = block {
+            self.channelSubscriptionBlocks[model.subscription] = block
+        }
+
+        if self.gFayeConnected == false {
+            self.queuedSubscriptions.append(model)
+
+            return .queued(model)
+        }
+
+        self.subscribe(model)
+
+        return .subscribingTo(model)
     }
-    
-    self.subscribe(model)
-    
-    return .subscribingTo(model)
-  }
-    
-  open func subscribeToChannel(_ channel:String, block:ChannelSubscriptionBlock?=nil) -> GFayeSubscriptionState {
-    return subscribeToChannel(
-        GFayeSubscriptionModel(subscription: channel, clientId: gFayeClientId),
-        block: block
-    )
-  }
-    
-  open func unsubscribeFromChannel(_ channel:String) {
-    _ = removeChannelFromQueuedSubscriptions(channel)
-    
-    self.unsubscribe(channel)
-    self.channelSubscriptionBlocks[channel] = nil;
-    
-    _ = removeChannelFromOpenSubscriptions(channel)
-    _ = removeChannelFromPendingSubscriptions(channel)
-  }
+
+    open func subscribeToChannel(_ channel: String, block: ChannelSubscriptionBlock?=nil) -> GFayeSubscriptionState {
+        return subscribeToChannel(
+            GFayeSubscriptionModel(subscription: channel, clientId: gFayeClientId),
+            block: block
+        )
+    }
+
+    open func unsubscribeFromChannel(_ channel: String) {
+        _ = removeChannelFromQueuedSubscriptions(channel)
+
+        self.unsubscribe(channel)
+        self.channelSubscriptionBlocks[channel] = nil
+
+        _ = removeChannelFromOpenSubscriptions(channel)
+        _ = removeChannelFromPendingSubscriptions(channel)
+    }
 }

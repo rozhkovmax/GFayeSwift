@@ -9,17 +9,17 @@
 //
 
 public protocol Transport {
-  func writeString(_ aString:String)
-  func openConnection()
-  func closeConnection()
-  func isConnected() -> (Bool)
+    func writeString(_ aString: String)
+    func openConnection()
+    func closeConnection()
+    func isConnected() -> (Bool)
 }
 
 public protocol TransportDelegate: class {
-  func didConnect()
-  func didFailConnection(_ error:Error?)
-  func didDisconnect(_ error: Error?)
-  func didWriteError(_ error:Error?)
-  func didReceiveMessage(_ text:String)
-  func didReceivePong()
+    func didConnect()
+    func didFailConnection(_ error: Error?)
+    func didDisconnect(_ error: Error?)
+    func didWriteError(_ error: Error?)
+    func didReceiveMessage(_ text: String)
+    func didReceivePong()
 }

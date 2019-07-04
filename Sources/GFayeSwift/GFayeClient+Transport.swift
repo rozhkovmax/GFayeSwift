@@ -13,30 +13,30 @@ import Foundation
 // MARK: Transport Delegate
 extension GFayeClient {
     public func didConnect() {
-        self.connectionInitiated = false;
+        self.connectionInitiated = false
         self.handshake()
     }
-    
+
     public func didDisconnect(_ error: Error?) {
         self.delegate?.disconnectedFromServer(self)
         self.connectionInitiated = false
         self.gFayeConnected = false
     }
-    
+
     public func didFailConnection(_ error: Error?) {
         self.delegate?.connectionFailed(self)
         self.connectionInitiated = false
         self.gFayeConnected = false
     }
-    
+
     public func didWriteError(_ error: Error?) {
         self.delegate?.fayeClientError(self, error: error ?? GFayeSocketError.transportWrite)
     }
-    
+
     public func didReceiveMessage(_ text: String) {
         self.receive(text)
     }
-    
+
     public func didReceivePong() {
         self.delegate?.pongReceived(self)
     }

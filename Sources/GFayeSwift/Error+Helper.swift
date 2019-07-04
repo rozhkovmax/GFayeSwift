@@ -16,13 +16,13 @@ public enum GFayeSocketError: Int, Swift.Error {
 }
 
 extension GFayeSocketError: CustomNSError {
-    
+
     /// return the error domain of GFayeSocketError
     public static var errorDomain: String { return "com.ckpwong.gfayeswift" }
-    
+
     /// return the error code of GFayeSocketError
     public var errorCode: Int { return self.rawValue }
-    
+
     /// return the userInfo of GFayeSocketError
     public var errorUserInfo: [String: Any] {
         switch self {

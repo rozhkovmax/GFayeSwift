@@ -11,14 +11,14 @@
 import Foundation
 
 public extension GFayeClient {
-    
+
     // MARK: Helper
-    
-    ///  Validate whatever a subscription has been subscribed correctly 
-    func isSubscribedToChannel(_ channel:String) -> Bool {
+
+    ///  Validate whatever a subscription has been subscribed correctly
+    func isSubscribedToChannel(_ channel: String) -> Bool {
         return self.openSubscriptions.contains { $0.subscription == channel }
     }
-    
+
     ///  Validate faye transport is connected
     func isTransportConnected() -> Bool {
         return self.transport!.isConnected()

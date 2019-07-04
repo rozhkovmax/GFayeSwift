@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name             = "GFayeSwift"
-  s.version          = "0.5.1"
+  s.version          = "0.5.2"
   s.summary          = "A pure Swift Faye (Bayeux/CometD) Client"
   s.description      = <<-DESC
                         A Pure Swift Client Library for Faye/Bayeux/CometD Pub-Sub messaging server.
                         Currently only supports Websocket transport.
-                        Ported from FayeSwift (https://github.com/hamin/FayeSwift) into Swift 4.2.
+                        Ported from FayeSwift (https://github.com/hamin/FayeSwift) into Swift 4 and Swift 5.
                        DESC
   s.homepage         = "https://github.com/ckpwong/GFayeSwift"
   s.license          = "MIT"
