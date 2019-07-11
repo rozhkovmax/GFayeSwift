@@ -18,8 +18,8 @@ class ViewController: UIViewController, UITextFieldDelegate, GFayeClientDelegate
   @IBOutlet weak var textView: UITextView!
   
   /// Example GFayeClient
-  let client:GFayeClient = GFayeClient(aGFayeURLString: "ws://localhost:5222/faye", channel: "/cool")
-  
+    let client:GFayeClient = GFayeClient(aGFayeURLString: "ws://localhost:5222/faye")
+
   // MARK:
   // MARK: Lifecycle
     
@@ -35,6 +35,7 @@ class ViewController: UIViewController, UITextFieldDelegate, GFayeClientDelegate
         print("Here is the Block message: \(text)")
       }
     }
+    _ = client.subscribeToChannel("/cool", block: channelBlock)
     _ = client.subscribeToChannel("/awesome", block: channelBlock)
     
     let delayTime = DispatchTime.now() + Double(Int64(5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
@@ -60,6 +61,7 @@ class ViewController: UIViewController, UITextFieldDelegate, GFayeClientDelegate
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     client.sendMessage(["text" : textField.text!], channel: "/cool")
+    textView.text.append("[me] \(textField.text!)\n")
     return false;
   }
     
@@ -90,9 +92,11 @@ class ViewController: UIViewController, UITextFieldDelegate, GFayeClientDelegate
     print("Subscription failed")
   }
   
-  func messageReceived(_ client: GFayeClient, messageDict: NSDictionary, channel: String) {
+  func messageReceived(_ client: GFayeClient, messageDict: GFayeMessage, channel: String) {
+    print("Message received: \(messageDict)")
     if let text = messageDict["text"] {
       print("Here is the message: \(text)")
+        self.textView.text.append("\(channel): \(text)\n")
     }
   }
   

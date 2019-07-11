@@ -14,9 +14,11 @@ public enum SubscriptionError: Error {
     case error(subscription: String, error: String)
 }
 
+public typealias GFayeMessage = [String: Any]
+
 // MARK: GFayeClientDelegate Protocol
-public protocol GFayeClientDelegate: NSObjectProtocol {
-    func messageReceived(_ client: GFayeClient, messageDict: NSDictionary, channel: String)
+public protocol GFayeClientDelegate: AnyObject {
+    func messageReceived(_ client: GFayeClient, messageDict: GFayeMessage, channel: String)
     func pongReceived(_ client: GFayeClient)
     func connectedToServer(_ client: GFayeClient)
     func disconnectedFromServer(_ client: GFayeClient)
@@ -28,7 +30,7 @@ public protocol GFayeClientDelegate: NSObjectProtocol {
 }
 
 public extension GFayeClientDelegate {
-    func messageReceived(_ client: GFayeClient, messageDict: NSDictionary, channel: String) {}
+    func messageReceived(_ client: GFayeClient, messageDict: GFayeMessage, channel: String) {}
     func pongReceived(_ client: GFayeClient) {}
     func connectedToServer(_ client: GFayeClient) {}
     func disconnectedFromServer(_ client: GFayeClient) {}

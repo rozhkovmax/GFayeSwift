@@ -65,14 +65,14 @@ open class GFayeSubscriptionModel {
     // MARK: Helper
 
     ///  Create dictionary of model object, Subclasses should override method to return custom model
-    open func toDictionary() throws -> [String: AnyObject] {
+    open func toDictionary() throws -> [String: Any] {
         guard let clientId = clientId else {
             throw GFayeSubscriptionModelError.clientIdNotValid
         }
 
-        return [Bayeux.channel.rawValue: channel.rawValue as AnyObject,
-                Bayeux.clientId.rawValue: clientId as AnyObject,
-                Bayeux.subscription.rawValue: subscription as AnyObject]
+        return [Bayeux.channel.rawValue: channel.rawValue,
+                Bayeux.clientId.rawValue: clientId,
+                Bayeux.subscription.rawValue: subscription]
     }
 }
 

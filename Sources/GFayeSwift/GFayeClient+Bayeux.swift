@@ -81,17 +81,17 @@ extension GFayeClient {
     // "supportedConnectionTypes": ["long-polling", "callback-polling", "iframe", "websocket]
     func handshake() {
         writeOperationQueue.sync { [unowned self] in
-            let connTypes: NSArray = [
+            let connTypes = [
                 BayeuxConnection.longPolling.rawValue,
                 BayeuxConnection.callbackPolling.rawValue,
                 BayeuxConnection.iFrame.rawValue,
                 BayeuxConnection.webSocket.rawValue
             ]
 
-            var dict = [String: AnyObject]()
-            dict[Bayeux.channel.rawValue] = BayeuxChannel.handshake.rawValue as AnyObject?
-            dict[Bayeux.version.rawValue] = "1.0" as AnyObject?
-            dict[Bayeux.minimumVersion.rawValue] = "1.0beta" as AnyObject?
+            var dict = [String: Any]()
+            dict[Bayeux.channel.rawValue] = BayeuxChannel.handshake.rawValue
+            dict[Bayeux.version.rawValue] = "1.0"
+            dict[Bayeux.minimumVersion.rawValue] = "1.0beta"
             dict[Bayeux.supportedConnectionTypes.rawValue] = connTypes
 
             if let string = JSON(dict).rawString() {
@@ -106,11 +106,11 @@ extension GFayeClient {
     // "connectionType": "long-polling"
     func connect() {
         writeOperationQueue.sync { [unowned self] in
-            let dict: [String: AnyObject] = [
-                Bayeux.channel.rawValue: BayeuxChannel.connect.rawValue as AnyObject,
-                Bayeux.clientId.rawValue: self.gFayeClientId! as AnyObject,
-                Bayeux.connectionType.rawValue: BayeuxConnection.webSocket.rawValue as AnyObject,
-                Bayeux.advice.rawValue: ["timeout": self.timeOut] as AnyObject
+            let dict: [String: Any] = [
+                Bayeux.channel.rawValue: BayeuxChannel.connect.rawValue,
+                Bayeux.clientId.rawValue: self.gFayeClientId!,
+                Bayeux.connectionType.rawValue: BayeuxConnection.webSocket.rawValue,
+                Bayeux.advice.rawValue: ["timeout": self.timeOut]
             ]
 
             if let string = JSON(dict).rawString() {
@@ -124,10 +124,10 @@ extension GFayeClient {
     // "clientId": "Un1q31d3nt1f13r"
     func disconnect() {
         writeOperationQueue.sync { [unowned self] in
-            let dict: [String: AnyObject] = [
-                Bayeux.channel.rawValue: BayeuxChannel.disconnect.rawValue as AnyObject,
-                Bayeux.clientId.rawValue: self.gFayeClientId! as AnyObject,
-                Bayeux.connectionType.rawValue: BayeuxConnection.webSocket.rawValue as AnyObject
+            let dict: [String: Any] = [
+                Bayeux.channel.rawValue: BayeuxChannel.disconnect.rawValue,
+                Bayeux.clientId.rawValue: self.gFayeClientId!,
+                Bayeux.connectionType.rawValue: BayeuxConnection.webSocket.rawValue
             ]
             if let string = JSON(dict).rawString() {
                 self.transport?.writeString(string)
@@ -168,10 +168,10 @@ extension GFayeClient {
     func unsubscribe(_ channel: String) {
         writeOperationQueue.sync { [unowned self] in
             if let clientId = self.gFayeClientId {
-                let dict: [String: AnyObject] = [
-                    Bayeux.channel.rawValue: BayeuxChannel.unsubscribe.rawValue as AnyObject,
-                    Bayeux.clientId.rawValue: clientId as AnyObject,
-                    Bayeux.subscription.rawValue: channel as AnyObject
+                let dict: [String: Any] = [
+                    Bayeux.channel.rawValue: BayeuxChannel.unsubscribe.rawValue,
+                    Bayeux.clientId.rawValue: clientId,
+                    Bayeux.subscription.rawValue: channel
                 ]
 
                 if let string = JSON(dict).rawString() {
@@ -188,14 +188,14 @@ extension GFayeClient {
     // "data": "some application string or JSON encoded object",
     // "id": "some unique message id"
     // }
-    func publish(_ data: [String: AnyObject], channel: String) {
+    func publish(_ data: GFayeMessage, channel: String) {
         writeOperationQueue.sync { [weak self] in
             if let clientId = self?.gFayeClientId, let messageId = self?.nextMessageId(), self?.gFayeConnected == true {
-                let dict: [String: AnyObject] = [
-                    Bayeux.channel.rawValue: channel as AnyObject,
-                    Bayeux.clientId.rawValue: clientId as AnyObject,
-                    Bayeux.id.rawValue: messageId as AnyObject,
-                    Bayeux.data.rawValue: data as AnyObject
+                let dict: [String: Any] = [
+                    Bayeux.channel.rawValue: channel,
+                    Bayeux.clientId.rawValue: clientId,
+                    Bayeux.id.rawValue: messageId,
+                    Bayeux.data.rawValue: data
                 ]
 
                 if let string = JSON(dict).rawString() {

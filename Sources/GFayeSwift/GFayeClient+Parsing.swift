@@ -104,17 +104,16 @@ extension GFayeClient {
     fileprivate func parseClientChannelFayeMessage(_ channel: String, _ messageJSON: JSON) {
         if self.isSubscribedToChannel(channel) {
             if messageJSON[0][Bayeux.data.rawValue] != JSON.null {
-                let data: AnyObject = messageJSON[0][Bayeux.data.rawValue].object as AnyObject
-
+                let data = messageJSON[0][Bayeux.data.rawValue].dictionaryObject!
                 if let channelBlock = self.channelSubscriptionBlocks[channel] {
-                    channelBlock(data as! NSDictionary)
+                    channelBlock(data)
                 } else {
                     print("Faye: Failed to get channel block for : \(channel)")
                 }
 
                 self.delegate?.messageReceived(
                     self,
-                    messageDict: data as! NSDictionary,
+                    messageDict: data,
                     channel: channel
                 )
             } else {

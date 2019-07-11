@@ -22,7 +22,7 @@ public enum GFayeSubscriptionState {
 }
 
 // MARK: Type Aliases
-public typealias ChannelSubscriptionBlock = (NSDictionary) -> Void
+public typealias ChannelSubscriptionBlock = (GFayeMessage) -> Void
 
 // MARK: GFayeClient
 open class GFayeClient: TransportDelegate {
@@ -85,7 +85,7 @@ open class GFayeClient: TransportDelegate {
     let openSubsLockQueue = DispatchQueue(label: "com.gfayeclient.openSubscriptionsLockQueue")
 
     // MARK: Init
-    public init(aGFayeURLString: String, channel: String?, timeoutAdvice: Int=10000) {
+    public init(aGFayeURLString: String, channel: String? = nil, timeoutAdvice: Int=10000) {
         self.gFayeURLString = aGFayeURLString
         self.gFayeConnected = false
         self.timeOut = timeoutAdvice
@@ -124,11 +124,7 @@ open class GFayeClient: TransportDelegate {
         self.disconnect()
     }
 
-    open func sendMessage(_ messageDict: NSDictionary, channel: String) {
-        self.publish(messageDict as! Dictionary, channel: channel)
-    }
-
-    open func sendMessage(_ messageDict: [String: AnyObject], channel: String) {
+    open func sendMessage(_ messageDict: GFayeMessage, channel: String) {
         self.publish(messageDict, channel: channel)
     }
 

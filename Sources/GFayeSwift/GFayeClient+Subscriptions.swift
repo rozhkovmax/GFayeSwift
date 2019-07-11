@@ -42,7 +42,7 @@ extension GFayeClient {
     // MARK: 
     // MARK: Send/Receive
 
-    func send(_ message: NSDictionary) {
+    func send(_ message: GFayeMessage) {
         writeOperationQueue.async { [unowned self] in
             if let string = JSON(message).rawString() {
                 self.transport?.writeString(string)
