@@ -48,9 +48,9 @@ extension GFayeClient {
         }
     }
 
-    fileprivate func parseSubscribeMessage(_ messageJSON: JSON) {
-        if let success = messageJSON[0][Bayeux.successful.rawValue].int, success == 1 {
-            if let subscription = messageJSON[0][Bayeux.subscription.rawValue].string {
+    fileprivate func parseSubscribeMessage(_ messageDict: JSON) {
+        if let success = messageDict[Bayeux.successful.rawValue].int, success == 1 {
+            if let subscription = messageDict[Bayeux.subscription.rawValue].string {
                 _ = removeChannelFromPendingSubscriptions(subscription)
 
                 self.openSubscriptions.append(
@@ -61,8 +61,8 @@ extension GFayeClient {
             }
         } else {
             // Subscribe Failed
-            if let error = messageJSON[0][Bayeux.error.rawValue].string,
-                let subscription = messageJSON[0][Bayeux.subscription.rawValue].string {
+            if let error = messageDict[Bayeux.error.rawValue].string,
+                let subscription = messageDict[Bayeux.subscription.rawValue].string {
                 _ = removeChannelFromPendingSubscriptions(subscription)
 
                 self.delegate?.subscriptionFailedWithError(
@@ -73,8 +73,8 @@ extension GFayeClient {
         }
     }
 
-    fileprivate func parseUnsubscribeMessage(_ messageJSON: JSON) {
-        if let subscription = messageJSON[0][Bayeux.subscription.rawValue].string {
+    fileprivate func parseUnsubscribeMessage(_ messageDict: JSON) {
+        if let subscription = messageDict[Bayeux.subscription.rawValue].string {
             _ = removeChannelFromOpenSubscriptions(subscription)
             self.delegate?.didUnsubscribeFromChannel(self, channel: subscription)
         } else {
@@ -84,8 +84,7 @@ extension GFayeClient {
 
     fileprivate func parseMetaChannelFayeMessage(
         _ metaChannel: BayeuxChannel,
-        _ messageDict: JSON,
-        _ messageJSON: JSON
+        _ messageDict: JSON
     ) {
         switch metaChannel {
         case .handshake:
@@ -95,16 +94,16 @@ extension GFayeClient {
         case .disconnect:
             parseDisconnectMessage(messageDict)
         case .subscribe:
-            parseSubscribeMessage(messageJSON)
+            parseSubscribeMessage(messageDict)
         case .unsubscribe:
-            parseUnsubscribeMessage(messageJSON)
+            parseUnsubscribeMessage(messageDict)
         }
     }
 
-    fileprivate func parseClientChannelFayeMessage(_ channel: String, _ messageJSON: JSON) {
+    fileprivate func parseClientChannelFayeMessage(_ channel: String, _ messageDict: JSON) {
         if self.isSubscribedToChannel(channel) {
-            if messageJSON[0][Bayeux.data.rawValue] != JSON.null {
-                let data = messageJSON[0][Bayeux.data.rawValue].dictionaryObject!
+            if messageDict[Bayeux.data.rawValue] != JSON.null {
+                let data = messageDict[Bayeux.data.rawValue].dictionaryObject!
                 if let channelBlock = self.channelSubscriptionBlocks[channel] {
                     channelBlock(data)
                 } else {
@@ -116,6 +115,13 @@ extension GFayeClient {
                     messageDict: data,
                     channel: channel
                 )
+            } else if messageDict[Bayeux.successful.rawValue] != JSON.null {
+                let successful = messageDict[Bayeux.successful.rawValue].boolValue
+                if let id = messageDict[Bayeux.id.rawValue].string {
+                    print("Faye: Message \(id) \(successful ? "successfully" : "failed to") sent to channel \(channel)")
+                } else {
+                    print("Faye: Message \(successful ? "successfully" : "failed to") sent to channel \(channel)")
+                }
             } else {
                 print("Faye: For some reason data is nil for channel: \(channel)")
             }
@@ -125,18 +131,19 @@ extension GFayeClient {
     }
 
     func parseFayeMessage(_ messageJSON: JSON) {
-        let messageDict = messageJSON[0]
-        if let channel = messageDict[Bayeux.channel.rawValue].string {
+        for (_,messageDict):(String,JSON) in messageJSON {
+            if let channel = messageDict[Bayeux.channel.rawValue].string {
 
-            // Handle Meta Channels
-            if let metaChannel = BayeuxChannel(rawValue: channel) {
-                parseMetaChannelFayeMessage(metaChannel, messageDict, messageJSON)
+                // Handle Meta Channels
+                if let metaChannel = BayeuxChannel(rawValue: channel) {
+                    parseMetaChannelFayeMessage(metaChannel, messageDict)
+                } else {
+                    // Handle Client Channel
+                    parseClientChannelFayeMessage(channel, messageDict)
+                }
             } else {
-                // Handle Client Channel
-                parseClientChannelFayeMessage(channel, messageJSON)
+                print("Faye: Missing channel for \(messageDict)")
             }
-        } else {
-            print("Faye: Missing channel for \(messageDict)")
         }
     }
 }

@@ -35,7 +35,7 @@ class ViewController: UIViewController, UITextFieldDelegate, GFayeClientDelegate
         print("Here is the Block message: \(text)")
       }
     }
-    _ = client.subscribeToChannel("/cool", block: channelBlock)
+    _ = client.subscribeToChannel("/cool")
     _ = client.subscribeToChannel("/awesome", block: channelBlock)
     
     let delayTime = DispatchTime.now() + Double(Int64(5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
