@@ -131,7 +131,7 @@ extension GFayeClient {
     }
 
     func parseFayeMessage(_ messageJSON: JSON) {
-        for (_,messageDict):(String,JSON) in messageJSON {
+        for (_, messageDict):(String, JSON) in messageJSON {
             if let channel = messageDict[Bayeux.channel.rawValue].string {
 
                 // Handle Meta Channels

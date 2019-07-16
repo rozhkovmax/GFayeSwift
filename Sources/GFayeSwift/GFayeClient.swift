@@ -10,7 +10,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 // MARK: Subscription State
 public enum GFayeSubscriptionState {
@@ -80,9 +79,9 @@ open class GFayeClient: TransportDelegate {
     let writeOperationQueue = DispatchQueue(
         label: "com.ckpwong.gfayeclient.write",
         attributes: DispatchQueue.Attributes.concurrent)
-    let queuedSubsLockQueue = DispatchQueue(label: "com.gfayeclient.queuedSubscriptionsLockQueue")
-    let pendingSubsLockQueue = DispatchQueue(label: "com.gfayeclient.pendingSubscriptionsLockQueue")
-    let openSubsLockQueue = DispatchQueue(label: "com.gfayeclient.openSubscriptionsLockQueue")
+    let queuedSubsLockQueue = DispatchQueue(label: "com.ckpwong.gfayeclient.queuedSubscriptionsLockQueue")
+    let pendingSubsLockQueue = DispatchQueue(label: "com.ckpwong.gfayeclient.pendingSubscriptionsLockQueue")
+    let openSubsLockQueue = DispatchQueue(label: "com.ckpwong.gfayeclient.openSubscriptionsLockQueue")
 
     // MARK: Init
     public init(aGFayeURLString: String, channel: String? = nil, timeoutAdvice: Int=10000) {
