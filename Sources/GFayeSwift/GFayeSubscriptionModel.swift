@@ -31,6 +31,9 @@ open class GFayeSubscriptionModel {
     /// Uniqle client id for socket
     open var clientId: String?
 
+    /// ext
+    open var ext: [String:String] = [String:String]()
+    
     /// Model must conform to Hashable
     open var hashValue: Int {
         return subscription.hashValue
@@ -39,10 +42,11 @@ open class GFayeSubscriptionModel {
     // MARK: 
     // MARK: Init
 
-    public init(subscription: String, channel: BayeuxChannel=BayeuxChannel.subscribe, clientId: String?) {
+    public init(subscription: String, channel: BayeuxChannel=BayeuxChannel.subscribe, clientId: String?, ext: [String:String] = [String:String]()) {
         self.subscription = subscription
         self.channel = channel
         self.clientId = clientId
+        self.ext = ext
     }
 
     // MARK: 
@@ -70,9 +74,13 @@ open class GFayeSubscriptionModel {
             throw GFayeSubscriptionModelError.clientIdNotValid
         }
 
-        return [Bayeux.channel.rawValue: channel.rawValue,
+        var dict: [String: Any] = [Bayeux.channel.rawValue: channel.rawValue,
                 Bayeux.clientId.rawValue: clientId,
                 Bayeux.subscription.rawValue: subscription]
+        if !ext.isEmpty {
+            dict[Bayeux.ext.rawValue] = ext
+        }
+        return dict
     }
 }
 

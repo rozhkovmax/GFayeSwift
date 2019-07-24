@@ -117,14 +117,14 @@ open class GFayeClient: TransportDelegate {
         }
     }
 
-    open func disconnectFromServer() {
+    open func disconnectFromServer(ext: [String:String] = [String:String]()) {
         unsubscribeAllSubscriptions()
 
-        self.disconnect()
+        self.disconnect(ext: ext)
     }
 
-    open func sendMessage(_ messageDict: GFayeMessage, channel: String) {
-        self.publish(messageDict, channel: channel)
+    open func sendMessage(_ messageDict: GFayeMessage, channel: String, ext: [String:String] = [String:String]()) {
+        self.publish(messageDict, channel: channel, ext: ext)
     }
 
     open func sendPing(_ data: Data, completion: (() -> Void)?) {
@@ -135,6 +135,7 @@ open class GFayeClient: TransportDelegate {
 
     open func subscribeToChannel(
         _ model: GFayeSubscriptionModel,
+        ext: [String:String] = [String:String](),
         block: ChannelSubscriptionBlock?=nil)
         -> GFayeSubscriptionState {
         guard !self.isSubscribedToChannel(model.subscription) else {
@@ -160,17 +161,18 @@ open class GFayeClient: TransportDelegate {
         return .subscribingTo(model)
     }
 
-    open func subscribeToChannel(_ channel: String, block: ChannelSubscriptionBlock?=nil) -> GFayeSubscriptionState {
+    open func subscribeToChannel(_ channel: String, ext: [String:String] = [String:String](), block: ChannelSubscriptionBlock?=nil) -> GFayeSubscriptionState {
         return subscribeToChannel(
             GFayeSubscriptionModel(subscription: channel, clientId: gFayeClientId),
+            ext: ext,
             block: block
         )
     }
 
-    open func unsubscribeFromChannel(_ channel: String) {
+    open func unsubscribeFromChannel(_ channel: String, ext: [String:String] = [String:String]()) {
         _ = removeChannelFromQueuedSubscriptions(channel)
 
-        self.unsubscribe(channel)
+        self.unsubscribe(channel, ext: ext)
         self.channelSubscriptionBlocks[channel] = nil
 
         _ = removeChannelFromOpenSubscriptions(channel)
