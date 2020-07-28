@@ -81,10 +81,10 @@ extension GFayeClient {
     // "supportedConnectionTypes": ["long-polling", "callback-polling", "iframe", "websocket]
     func handshake(ext: [String:String] = [String:String]()) {
         let allowedConnectionTypes = [
-            BayeuxConnection.longPolling.rawValue,
-            BayeuxConnection.callbackPolling.rawValue,
-            BayeuxConnection.iFrame.rawValue,
-            BayeuxConnection.webSocket.rawValue
+            BayeuxConnection.longPolling,
+            BayeuxConnection.callbackPolling,
+            BayeuxConnection.iFrame,
+            BayeuxConnection.webSocket
         ]
         handshake(allowedConnectionTypes: allowedConnectionTypes, ext: ext)
     }
@@ -96,7 +96,7 @@ extension GFayeClient {
     // "supportedConnectionTypes": ["long-polling", "callback-polling", "iframe", "websocket]
     func handshake(allowedConnectionTypes: [BayeuxConnection], ext: [String:String] = [String:String]()) {
         writeOperationQueue.sync { [unowned self] in
-            let connTypes[BayeuxConnection] = Array(allowedConnectionTypes)
+            let connTypes[String] = allowedConnectionTypes.map { $0.rawValue }
 
             var dict = [String: Any]()
             dict[Bayeux.channel.rawValue] = BayeuxChannel.handshake.rawValue
