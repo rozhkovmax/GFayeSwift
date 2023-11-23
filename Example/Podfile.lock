@@ -1,5 +1,5 @@
 PODS:
-  - GFayeSwift (0.5.5):
+  - GFayeSwift (0.5.7):
     - Starscream (~> 3.1.0)
     - SwiftyJSON (~> 5.0.0)
   - Starscream (3.1.0)
@@ -9,7 +9,7 @@ DEPENDENCIES:
   - GFayeSwift (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Starscream
     - SwiftyJSON
 
@@ -18,10 +18,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  GFayeSwift: 53736990a15a1bbcdea43d01f07a632cdd58930d
+  GFayeSwift: 8ac38eeafeb37f9002e3c6402ab883aae144748b
   Starscream: 08172b481e145289c4930cb567230fb55897cfa4
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
 PODFILE CHECKSUM: 7c198651615b77b7caa39b842903cd5ffb5b8b95
 
-COCOAPODS: 1.7.3
+COCOAPODS: 1.12.1
