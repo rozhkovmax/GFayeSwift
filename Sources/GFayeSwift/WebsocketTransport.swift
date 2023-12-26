@@ -24,7 +24,13 @@ internal class WebsocketTransport: Transport, WebSocketDelegate {
 
     func openConnection() {
         self.closeConnection()
-        self.webSocket = WebSocket(request: URLRequest(url: URL(string: self.urlString)!))
+        
+        if let url = URL(string: self.urlString) {
+            let request = URLRequest(url: url)
+            self.webSocket = WebSocket(request: request)
+        } else {
+            print("Faye: Error connection with \(self.urlString)")
+        }
 
         if let webSocket = self.webSocket {
             webSocket.delegate = self
